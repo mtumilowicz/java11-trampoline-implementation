@@ -18,7 +18,6 @@ public interface Trampoline<T> extends Supplier<Trampoline<T>> {
     }
 
     default T invoke() {
-        System.out.println(this);
         return Stream.iterate(this, Trampoline::get)
                 .filter(Trampoline::isComplete)
                 .findFirst()
