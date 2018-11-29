@@ -8,8 +8,8 @@ project about trampolines: https://github.com/mtumilowicz/groovy-trampoline-tail
 (contains all basics definitions).
 
 # preface
-We want to have mechanism that will convert consecutive,
-recurrent calls to the stream of consecutive function 
+We want to have mechanism that will convert recurrent 
+calls to the stream of consecutive function 
 invocations until some function could return value.
 ```
 Stream.iterate(this, nextInvocation)
@@ -19,6 +19,7 @@ Stream.iterate(this, nextInvocation)
                 .result();
 ```
 # project description
+## theory
 We provide interface `Trampoline` with methods:
 * for check if process is complete
     ```
@@ -36,7 +37,7 @@ We provide interface `Trampoline` with methods:
               throw new UnsupportedOperationException();
           }
     ```
-    default behaviour: throwing UnsupportedOperationException,
+    **default behaviour**: throwing `UnsupportedOperationException`,
     because the result is not available yet
 * pipeline
     ```
@@ -81,4 +82,22 @@ We provide interface `Trampoline` with methods:
             }
     }
     ```
+## example
+We will show how to use trampoline on factorial function:
+```
+public class Factorial implements IntToLongFunction {
+
+    @Override
+    public long applyAsLong(int value) {
+        return factorial(value, 1).invoke();
+    }
     
+    private Trampoline<Long> factorial(int n, long acc) {
+        return n == 1 ? Trampoline.completed(acc) : () -> factorial(n - 1, acc * n);
+    }
+}
+```
+so to get `factorial(n)` simply call:
+```
+assertThat(new Factorial().applyAsLong(20), is(2432902008176640000L));
+```
