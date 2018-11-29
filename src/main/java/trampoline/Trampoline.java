@@ -21,7 +21,7 @@ public interface Trampoline<T> extends Supplier<Trampoline<T>> {
         return Stream.iterate(this, Trampoline::get)
                 .filter(Trampoline::isComplete)
                 .findFirst()
-                .get()
+                .orElseThrow()
                 .result();
     }
 
