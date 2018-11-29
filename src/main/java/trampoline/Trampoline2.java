@@ -29,34 +29,42 @@ public interface Trampoline2<T> extends Supplier<T> {
     }
     
     public static <T> Trampoline2<T> more(final Trampoline2<Trampoline2<T>> trampoline) {
-        return new Trampoline2<T>() {
-
-
-            @Override
-            public boolean complete() {
-                return false;
-            }
-
-            @Override
-            public Trampoline2<T> bounce() {
-                return trampoline.result();
-            }
-
-            @Override
-            public T get() {
-                return trampoline(this);
-            }
-
-            T trampoline(final Trampoline2<T> trampoline) {
-
-                return Stream.iterate(trampoline, Trampoline2::bounce)
-                        .filter(Trampoline2::complete)
-                        .findFirst()
-                        .orElseThrow()
-                        .result();
-
-            }
-        };
+        return new IntermediaryCall<>(trampoline);
     }
+    
+    class IntermediaryCall<T> implements Trampoline2<T> {
+
+        final Trampoline2<Trampoline2<T>> trampoline;
+
+         IntermediaryCall(Trampoline2<Trampoline2<T>> trampoline) {
+            this.trampoline = trampoline;
+        }
+
+
+        @Override
+        public boolean complete() {
+            return false;
+        }
+
+        @Override
+        public Trampoline2<T> bounce() {
+            return trampoline.result();
+        }
+
+        @Override
+        public T get() {
+            return trampoline(this);
+        }
+
+        T trampoline(final Trampoline2<T> trampoline) {
+
+            return Stream.iterate(trampoline, Trampoline2::bounce)
+                    .filter(Trampoline2::complete)
+                    .findFirst()
+                    .orElseThrow()
+                    .result();
+
+        }
+    };
 
 }
