@@ -17,6 +17,7 @@ public interface Trampoline<T> {
         throw new UnsupportedOperationException();
     }
 
+    // next stage bounce
     Trampoline<T> bounce();
 
     default T invoke() {
