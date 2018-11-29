@@ -14,6 +14,7 @@ public interface Trampoline<T> extends Supplier<Trampoline<T>> {
     }
 
     default T result() {
+        // result is not available
         throw new UnsupportedOperationException();
     }
 
@@ -49,6 +50,7 @@ public interface Trampoline<T> extends Supplier<Trampoline<T>> {
 
         @Override
         public Trampoline<T> get() {
+            // bouncing is over
             throw new UnsupportedOperationException();
         }
     }
