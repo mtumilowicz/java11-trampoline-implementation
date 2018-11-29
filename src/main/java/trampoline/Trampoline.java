@@ -6,7 +6,7 @@ import java.util.stream.Stream;
  * Created by mtumilowicz on 2018-11-25.
  */
 @FunctionalInterface
-public interface Trampoline<T> extends Bouncer<Trampoline<T>> {
+public interface Trampoline<T> {
 
     default boolean isComplete() {
         return false;
@@ -16,6 +16,8 @@ public interface Trampoline<T> extends Bouncer<Trampoline<T>> {
         // result is not available
         throw new UnsupportedOperationException();
     }
+
+    Trampoline<T> bounce();
 
     default T invoke() {
         return Stream.iterate(this, Trampoline::bounce)
