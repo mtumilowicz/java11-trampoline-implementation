@@ -10,9 +10,8 @@ public class Fact implements Function<Integer, Long> {
     public Long apply(Integer integer) {
         return fact(integer, 1).invoke();
     }
-    
+
     private Trampoline<Long> fact(int n, long acc) {
-        if (n==1) return Trampoline.done(acc);
-        return () -> fact(n-1, acc*n);
+        return n == 1 ? Trampoline.done(acc) : () -> fact(n - 1, acc * n);
     }
 }
