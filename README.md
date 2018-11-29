@@ -1,6 +1,6 @@
+[![Build Status](https://travis-ci.com/mtumilowicz/java11-trampoline-implementation.svg?branch=master)](https://travis-ci.com/mtumilowicz/java11-trampoline-implementation)
 # java11-trampoline-implementation
-
-_Reference_: https://github.com/aol/cyclops/blob/master/cyclops/src/main/java/cyclops/control/Trampoline.java
+Simple implementation of trampoline in Java.
 
 # preface
 Java implementation of trampoline concept. Please refer my other
