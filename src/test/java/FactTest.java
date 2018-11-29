@@ -13,9 +13,9 @@ public class FactTest {
     public void xxx() {
         Fact fact = new Fact();
 
-        Long apply = fact.apply(50);
+        Long apply = fact.apply(20);
 
-        assertThat(apply, is(120L));
+        assertThat(apply, is(2432902008176640000L));
     }
 
     @Test
@@ -27,12 +27,12 @@ public class FactTest {
 
     @Test
     public void xxx3() {
-        Integer result = chuj(1_000_000, 1).result();
+        Integer result = xxxxxxxxxx(1_000_000, 1).result();
 
         assertThat(result, is(1307674368000L));
     }
 
-    public Trampoline2<Integer> chuj(int n, int acc) {
-        return n == 1 ? Trampoline2.done(acc) : Trampoline2.more(() -> chuj(n - 1, n * acc));
+    public Trampoline2<Integer> xxxxxxxxxx(int n, int acc) {
+        return n == 1 ? Trampoline2.done(acc) : Trampoline2.more(() -> xxxxxxxxxx(n - 1, n * acc));
     }
 }
