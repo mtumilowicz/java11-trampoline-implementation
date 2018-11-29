@@ -13,9 +13,12 @@ public class FactTest {
     public void xxx() {
         Fact fact = new Fact();
 
-        Long apply = fact.apply(20);
-
-        assertThat(apply, is(2432902008176640000L));
+        Long apply = fact.apply(1_000_000);
+    }
+    
+    @Test
+    public void xxxxxxxx() {
+        Long aLong = naiveFactorial(1_000_000, 1);
     }
 
     @Test
@@ -31,8 +34,17 @@ public class FactTest {
 
         assertThat(result, is(1307674368000L));
     }
+    
+    @Test
+    public void xxxxx() {
+        Long fact = Fact3.fact(1_000_000, 1).result();
+    }
 
     public Trampoline2<Integer> xxxxxxxxxx(int n, int acc) {
         return n == 1 ? Trampoline2.done(acc) : Trampoline2.more(() -> xxxxxxxxxx(n - 1, n * acc));
+    }
+
+    public Long naiveFactorial(int n, long acc) {
+        return n == 1 ? acc : naiveFactorial(n-1, n*acc);
     }
 }
