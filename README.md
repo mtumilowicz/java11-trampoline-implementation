@@ -83,7 +83,7 @@ We provide interface `Trampoline` with methods:
     }
     ```
 ## example
-We will show how to use trampoline on factorial function:
+We will show how to use trampoline `Factorial`:
 ```
 public class Factorial implements IntToLongFunction {
 
