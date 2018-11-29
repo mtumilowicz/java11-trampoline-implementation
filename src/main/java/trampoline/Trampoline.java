@@ -1,13 +1,12 @@
 package trampoline;
 
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
  * Created by mtumilowicz on 2018-11-25.
  */
 @FunctionalInterface
-public interface Trampoline<T> extends Supplier<Trampoline<T>> {
+public interface Trampoline<T> extends Bouncer<Trampoline<T>> {
 
     default boolean isComplete() {
         return false;
@@ -19,7 +18,7 @@ public interface Trampoline<T> extends Supplier<Trampoline<T>> {
     }
 
     default T invoke() {
-        return Stream.iterate(this, Trampoline::get)
+        return Stream.iterate(this, Trampoline::bounce)
                 .filter(Trampoline::isComplete)
                 .findFirst()
                 .orElseThrow()
@@ -49,7 +48,7 @@ public interface Trampoline<T> extends Supplier<Trampoline<T>> {
         }
 
         @Override
-        public Trampoline<T> get() {
+        public Trampoline<T> bounce() {
             // bouncing is over
             throw new UnsupportedOperationException();
         }
