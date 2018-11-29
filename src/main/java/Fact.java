@@ -12,6 +12,6 @@ public class Fact implements Function<Integer, Long> {
     }
 
     private Trampoline<Long> fact(int n, long acc) {
-        return n == 1 ? Trampoline.done(acc) : () -> fact(n - 1, acc * n);
+        return n == 1 ? Trampoline.done(acc) : Trampoline.more(() -> fact(n - 1, acc * n));
     }
 }
