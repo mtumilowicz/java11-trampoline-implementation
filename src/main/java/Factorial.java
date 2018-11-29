@@ -13,6 +13,6 @@ public class Factorial implements IntToLongFunction {
     }
     
     private Trampoline<Long> factorial(int n, long acc) {
-        return n == 1 ? Trampoline.done(acc) : () -> factorial(n - 1, acc * n);
+        return n == 1 ? Trampoline.completed(acc) : () -> factorial(n - 1, acc * n);
     }
 }

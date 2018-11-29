@@ -13,11 +13,9 @@ public interface Trampoline<T> {
     }
 
     default T result() {
-        // result is not available yet
         throw new UnsupportedOperationException();
     }
 
-    // next stage bounce
     Trampoline<T> bounce();
 
     default T invoke() {
@@ -28,15 +26,15 @@ public interface Trampoline<T> {
                 .result();
     }
 
-    static <T> Trampoline<T> done(T result) {
-        return new TerminalCall<>(result);
+    static <T> Trampoline<T> completed(T result) {
+        return new Completed<>(result);
     }
 
-    class TerminalCall<T> implements Trampoline<T> {
+    class Completed<T> implements Trampoline<T> {
 
         private final T result;
 
-        TerminalCall(T result) {
+        Completed(T result) {
             this.result = result;
         }
 
@@ -52,7 +50,6 @@ public interface Trampoline<T> {
 
         @Override
         public Trampoline<T> bounce() {
-            // bouncing is over
             throw new UnsupportedOperationException();
         }
     }
